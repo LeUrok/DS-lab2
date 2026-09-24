@@ -38,6 +38,25 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+  
+  cars-service:
+    build:
+      context: ./cars-service
+      dockerfile: Dockerfile
+    container_name: cars-service
+    restart: on-failure
+    environment:
+      PORT: "8070"
+      DB_HOST: postgres
+      DB_PORT: "5432"
+      DB_USER: program
+      DB_PASSWORD: test
+      DB_NAME: cars
+    ports:
+      - "8070:8070"
+    depends_on:
+      postgres:
+        condition: service_healthy
 
 volumes:
   db-data:
