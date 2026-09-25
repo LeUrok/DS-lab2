@@ -58,5 +58,24 @@ services:
       postgres:
         condition: service_healthy
 
+  rental-service:
+    build:
+      context: ./rental-service
+      dockerfile: Dockerfile
+    container_name: rental-service
+    restart: on-failure
+    environment:
+      PORT: "8060"
+      DB_HOST: postgres
+      DB_PORT: "5432"
+      DB_USER: program
+      DB_PASSWORD: test
+      DB_NAME: rentals
+    ports:
+      - "8060:8060"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
 volumes:
   db-data:
