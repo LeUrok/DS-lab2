@@ -22,6 +22,10 @@ jobs:
       - name: Build images
         timeout-minutes: 10
         run: docker compose build
+      
+      - name: Test cars-service
+        working-directory: cars-service
+        run: go test ./... -v
 
       - name: Run containers
         timeout-minutes: 5
