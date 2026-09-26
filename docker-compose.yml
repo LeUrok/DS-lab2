@@ -20,6 +20,24 @@ services:
       retries: 10
 
 # TODO добавить сервисы
+  gateway-service:
+    build:
+      context: ./gateway-service
+      dockerfile: Dockerfile
+    container_name: gateway-service
+    restart: on-failure
+    environment:
+      PORT: "8080"
+      CARS_URL: http://cars-service:8070
+      RENTAL_URL: http://rental-service:8060
+      PAYMENT_URL: http://payment-service:8050
+    ports:
+      - "8080:8080"
+    depends_on:
+      - cars-service
+      - rental-service
+      - payment-service
+
   payment-service:
     build:
       context: ./payment-service
